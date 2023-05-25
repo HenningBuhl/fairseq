@@ -219,7 +219,7 @@ class SpeechDLM(FairseqLanguageModel):
             **kwargs,
         )
         logger.info(x["args"])
-        return MultichannelGeneratorHubInterface(x["args"], x["task"], x["models"])
+        return MultichannelGeneratorHubInterface(x["args"], x["task"], x["models"], **kwargs)
 
     @property
     def supported_targets(self):

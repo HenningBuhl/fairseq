@@ -134,7 +134,7 @@ class BARTModel(TransformerModel):
             sample_break_mode=sample_break_mode,
             **kwargs,
         )
-        return BARTHubInterface(x["args"], x["task"], x["models"][0])
+        return BARTHubInterface(x["args"], x["task"], x["models"][0], **kwargs)
 
     def register_classification_head(
         self, name, num_classes=None, inner_dim=None, **kwargs

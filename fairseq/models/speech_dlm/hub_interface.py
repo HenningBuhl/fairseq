@@ -26,8 +26,8 @@ class MultichannelGeneratorHubInterface(GeneratorHubInterface):
     multichannel language model.
     """
 
-    def __init__(self, cfg, task, models):
-        super().__init__(cfg, task, models)
+    def __init__(self, cfg, task, models, **kwargs):
+        super().__init__(cfg, task, models, **kwargs)
         self.cfg = cfg
         self.task = task
         self.models = nn.ModuleList(models)
@@ -36,8 +36,9 @@ class MultichannelGeneratorHubInterface(GeneratorHubInterface):
         self.channels = task.channels
 
         # optimize model for generation
-        for model in self.models:
-            model.prepare_for_inference_(cfg)
+        if kwargs.get('prepare_for_inference', True):
+            for model in self.models:
+                model.prepare_for_inference_(cfg)
 
     def sample(
         self,

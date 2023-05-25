@@ -100,7 +100,7 @@ class GeneratorHubInterface(nn.Module):
     translation or language model.
     """
 
-    def __init__(self, cfg, task, models):
+    def __init__(self, cfg, task, models, **kwargs):
         super().__init__()
         self.cfg = cfg
         self.task = task
@@ -109,8 +109,9 @@ class GeneratorHubInterface(nn.Module):
         self.tgt_dict = task.target_dictionary
 
         # optimize model for generation
-        for model in self.models:
-            model.prepare_for_inference_(cfg)
+        if kwargs.get('prepare_for_inference', True):
+            for model in self.models:
+                model.prepare_for_inference_(cfg)
 
         # Load alignment dictionary for unknown word replacement
         # (None if no unknown word replacement, empty if no path to align dictionary)

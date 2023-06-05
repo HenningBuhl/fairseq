@@ -202,6 +202,7 @@ class TranslationMultiSimpleEpochTask(LegacyFairseqTask):
         args,
         seq_gen_cls=None,
         extra_gen_cls_kwargs=None,
+        prefix_allowed_tokens_fn=None,
     ):
         if not getattr(args, "keep_inference_langtok", False):
             _, tgt_langtok_spec = self.args.langtoks["main"]
@@ -213,7 +214,7 @@ class TranslationMultiSimpleEpochTask(LegacyFairseqTask):
                 extra_gen_cls_kwargs["symbols_to_strip_from_output"] = {tgt_lang_tok}
 
         return super().build_generator(
-            models, args, seq_gen_cls=None, extra_gen_cls_kwargs=extra_gen_cls_kwargs
+            models, args, seq_gen_cls=None, extra_gen_cls_kwargs=extra_gen_cls_kwargs, prefix_allowed_tokens_fn=prefix_allowed_tokens_fn
         )
 
     def build_model(self, args, from_checkpoint=False):
